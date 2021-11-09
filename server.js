@@ -1,4 +1,4 @@
-const express = requrie('express');
+const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -10,13 +10,12 @@ app.use(express.static('public'));
 
 app.use(require('./routes'));
 
-app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
-
-mongoose.connect(process.env.MONGODB_URL || 'mongodB://localhost/socialapi', {
-  useFindAndModify: false,
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/socialapi', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
 //Use this to log mongo queries being executed!
-mongoose.set('debug', true);
+mongoose.set("debug", true);
+
+app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
