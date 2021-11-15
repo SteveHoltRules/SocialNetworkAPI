@@ -3,9 +3,11 @@ const { Thought, User } = require('../models');
 const thoughtController = {
   // get all thoughts
   getThoughts(req, res) {
-    Thought.find()
-      .sort({ createdAt: -1 })
+    Thought.find({})
+      
+      // .sort({ createdAt: -1 })
       .then((dbThoughtData) => {
+        console.log("DbThoughtData: ", dbThoughtData);
         res.json(dbThoughtData)
       })
       .catch((err) => {
@@ -98,6 +100,7 @@ const thoughtController = {
           return res.status(404).json({ message: "No thought with this id!" });
         }
         res.json(dbThoughtData);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -106,7 +109,7 @@ const thoughtController = {
   },
 
   removeReaction(req, res) {
-    Thought.findOneAndRemove(
+    Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId }}},
       { new: true }
